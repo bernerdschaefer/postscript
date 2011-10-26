@@ -5,9 +5,12 @@ module PostScript
 
     class << self
 
-      # see #parse
-      def parse(string)
-        new(string).parse
+      # Parses the provided source code and returns the parsed procedure.
+      #
+      # @param [String] source the PostScript source code
+      # @return [Array] the parsed procedure
+      def parse(source)
+        new(source).parse
       end
 
     end
@@ -22,7 +25,9 @@ module PostScript
       @source = normalize(source)
     end
 
-    # @return [Array] the result of parsing the source
+    # Parses the source code and returns the parsed procedure.
+    #
+    # @return [Array] the parsed procedure
     def parse
       tokens = source.split(/([{} ])/)
 
