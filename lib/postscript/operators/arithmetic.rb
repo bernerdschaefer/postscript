@@ -4,42 +4,32 @@ module PostScript
 
       # Replaces the last two elements with their sum.
       def add
-        y = pop
-        x = pop
-
+        x, y = stack.pop(2)
         push x + y
       end
 
       # Replaces the last two elements with their difference.
       def sub
-        y = pop
-        x = pop
-
+        x, y = stack.pop(2)
         push x - y
       end
 
       # Replaces the last two elements with their product.
       def mul
-        y = pop
-        x = pop
-
+        x, y = stack.pop(2)
         push x * y
       end
 
       # Replaces the last two elements with their quotient.
       def div
-        y = pop
-        x = pop
-
+        x, y = stack.pop(2)
         push x / y
       end
       alias idiv div
 
       # Replaces the last two elements with their remainder.
       def mod
-        y = pop
-        x = pop
-
+        x, y = stack.pop(2)
         push x % y
       end
 
@@ -90,17 +80,13 @@ module PostScript
 
       # Replaces the last two elements with their arc tangent.
       def atan
-        y = pop
-        x = pop
-
+        x, y = stack.pop(2)
         push Math.atan2(x, y)
       end
 
       # Replaces the last two elements with their exponent.
       def exp
-        y = pop
-        x = pop
-
+        x, y = stack.pop(2)
         push x ** y
       end
 

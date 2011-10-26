@@ -13,8 +13,7 @@ module PostScript
 
       # Executes the procedure if the test condition is true.
       def ifelse
-        procedure2 = pop
-        procedure1 = pop
+        procedure1, procedure2 = stack.pop(2)
 
         if pop
           eval_procedure procedure1

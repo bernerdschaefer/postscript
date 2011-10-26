@@ -16,11 +16,7 @@ module PostScript
 
       # Swaps the last two elements on the stack.
       def exch
-        y = pop
-        x = pop
-
-        push y
-        push x
+        push *(stack.pop(2).reverse)
       end
 
       # Adds a copy of the +n+th element on the stack.
@@ -38,8 +34,7 @@ module PostScript
       # Moves the last +n+ elements +j+ positions on the stack, rolling over at
       # stack boundaries.
       def roll
-        j = pop
-        n = pop
+        n, j = stack.pop(2)
 
         stack.push *stack.pop(n).rotate(-j)
       end
