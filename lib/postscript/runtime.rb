@@ -11,7 +11,24 @@ module PostScript
     #
     # @param [String] function the function to evaluate.
     # @return [Array] the stack after evaluating the provided function.
-    def eval(function) ; end
+    def eval(function)
+      ast = Parser.parse(function)
+
+      eval_ast ast
+    end
+
+    # Evaluates the result of a parsed PostScript procedure.
+    #
+    # @api private
+    def eval_ast(ast)
+      ast.each do |node|
+        if node.is_a? Symbol
+          send node
+        else
+          push node
+        end
+      end
+    end
 
     # Pushes the provided operator onto the stack. This is most useful for
     # setting up the initial state before evaluating a PostScript function.

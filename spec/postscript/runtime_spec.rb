@@ -31,4 +31,49 @@ describe PostScript::Runtime do
     end
   end
 
+  describe "#eval" do
+    let(:function) do
+      "{ exch }"
+    end
+
+    it "parses the supplied function" do
+      PostScript::Parser.should_receive(:parse).
+        with(function).
+        and_return([])
+
+      runtime.eval function
+    end
+
+    it "evaluates the returned AST" do
+      ast = []
+      PostScript::Parser.stub(:parse => ast)
+      runtime.should_receive(:eval_ast).with(ast)
+      runtime.eval function
+    end
+  end
+
+  describe "#eval_ast" do
+
+    it "adds integers to the stack" do
+      runtime.eval_ast [1, 2]
+      runtime.stack.should eq [1, 2]
+    end
+
+    it "adds floats to the stack" do
+      runtime.eval_ast [1.1, 2.1]
+      runtime.stack.should eq [1.1, 2.1]
+    end
+
+    it "adds procedures to the stack" do
+      runtime.eval_ast [ [1, 2] ]
+      runtime.stack.should eq [ [1, 2] ]
+    end
+
+    it "calls symbols" do
+      runtime.should_receive :exch
+      runtime.eval_ast [ :exch ]
+    end
+
+  end
+
 end
