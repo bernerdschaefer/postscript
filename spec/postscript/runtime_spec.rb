@@ -50,6 +50,14 @@ describe PostScript::Runtime do
       runtime.should_receive(:eval_procedure).with(procedure)
       runtime.eval function
     end
+
+    it "returns the stack" do
+      procedure = []
+      PostScript::Parser.stub(:parse => procedure)
+      runtime.should_receive(:eval_procedure).with(procedure)
+      runtime.push 1.0, 2
+      runtime.eval(function).should eq [1.0, 2]
+    end
   end
 
   describe "#eval_procedure" do

@@ -12,9 +12,8 @@ module PostScript
     # @param [String] function the function to evaluate.
     # @return [Array] the stack after evaluating the provided function.
     def eval(function)
-      procedure = Parser.parse(function)
-
-      eval_procedure procedure
+      eval_procedure Parser.parse(function)
+      stack
     end
 
     # Evaluates the result of a parsed PostScript procedure.
