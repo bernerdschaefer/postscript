@@ -60,16 +60,21 @@ module PostScript
       node = []
 
       while token = tokens.shift
-        if token == "" || token == " "
+        case token
+        when "", " "
           next
-        elsif token == "{"
+        when "{"
           node << parse_procedure(tokens)
-        elsif token == "}"
+        when "}"
           break
-        elsif token =~ /^ -? [0-9]+ $/x
+        when /^ -? [0-9]+ $/x
           node.push Integer(token)
-        elsif token =~ /^ -? [0-9]+ \. [0-9]+ $/x
+        when /^ -? [0-9]+ \. [0-9]+ $/x
           node.push Float(token)
+        when "true"
+          node.push true
+        when "false"
+          node.push false
         else
           node.push token.to_sym
         end

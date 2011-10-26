@@ -75,6 +75,16 @@ describe PostScript::Parser do
       end
     end
 
+    context "booleans" do
+      let(:parser) do
+        PostScript::Parser.new "{ true false }"
+      end
+
+      it "returns an array of boolean values" do
+        parser.parse.should eq [ true, false ]
+      end
+    end
+
     context "operators" do
       let(:parser) do
         PostScript::Parser.new "{ exch dup }"
