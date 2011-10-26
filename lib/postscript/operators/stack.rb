@@ -41,7 +41,7 @@ module PostScript
         j = pop
         n = pop
 
-        stack.rotate! -j
+        stack.push *stack.pop(n).rotate(-j)
       end
 
     end

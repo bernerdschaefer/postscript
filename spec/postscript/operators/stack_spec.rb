@@ -75,28 +75,36 @@ describe PostScript::Operators::Stack do
   end
 
   describe "#roll" do
-    before do
-      runtime.push 0
-      runtime.push 10
-      runtime.push 20
-      runtime.push 30
+    it "rolls the stack when j = -1" do
+      runtime.push 1, 2, 3
+      runtime.push 3, -1
+      runtime.roll.should eq [2, 3, 1]
     end
 
-    context "j is positive" do
-      it "rolls n elements up the stack j times" do
-        runtime.push 2, 1
-        runtime.roll
-        runtime.stack.should eq [30, 0, 10, 20]
-      end
+    it "rolls the stack when j = 1" do
+      runtime.push 1, 2, 3
+      runtime.push 3, 1
+      runtime.roll.should eq [3, 1, 2]
     end
 
-    context "j is negative" do
-      it "rolls n elements down the stack j times" do
-        runtime.push 2, -2
-        runtime.roll
-        runtime.stack.should eq [20, 30, 0, 10]
-      end
+    it "does not roll the stack when j = 0" do
+      runtime.push 1, 2, 3
+      runtime.push 3, 0
+      runtime.roll.should eq [1, 2, 3]
     end
+
+    it "rolls the stack when n is smaller than the stack length" do
+      runtime.push 1, 2, 3, 4, 5
+      runtime.push 3, 1
+      runtime.roll.should eq [1, 2, 5, 3, 4]
+    end
+
+    it "rolls the stack when n is smaller than the stack length and j = -1" do
+      runtime.push 1, 2, 3, 4, 5
+      runtime.push 3, -1
+      runtime.roll.should eq [1, 2, 4, 5, 3]
+    end
+
   end
 
 end
