@@ -6,7 +6,7 @@ module PostScript
       def if
         procedure = pop
 
-        eval_ast procedure if pop
+        eval_procedure procedure if pop
 
         stack
       end
@@ -17,9 +17,9 @@ module PostScript
         procedure1 = pop
 
         if pop
-          eval_ast procedure1
+          eval_procedure procedure1
         else
-          eval_ast procedure2
+          eval_procedure procedure2
         end
 
         stack

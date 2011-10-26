@@ -105,6 +105,36 @@ describe PostScript::Runtime do
       end
     end
 
+    describe "Round" do
+      let(:function) do
+        <<-PS
+        { abs exch abs
+          2 copy add 1 le
+            { dup mul exch dup mul add 1 exch sub }
+            { 1 sub dup mul exch 1 sub dup mul add 1 sub }
+        ifelse }
+        PS
+      end
+
+      context "when x.abs + y.abs <= 1" do
+        let(:x) { 0.1 }
+        let(:y) { 0.2 }
+
+        it "produces the correct results" do
+          result.should eq [1 - (x**2 + y**2)]
+        end
+      end
+
+      context "when x.abs + y.abs > 1" do
+        let(:x) { 1.1 }
+        let(:y) { 0.2 }
+
+        it "produces the correct results" do
+          result.should eq [(x.abs - 1)**2 + (y.abs - 1)**2 - 1]
+        end
+      end
+    end
+
     describe "EllipseA" do
       let(:function) { "{ dup mul 0.9 mul exch dup mul add 1 exch sub}" }
 
