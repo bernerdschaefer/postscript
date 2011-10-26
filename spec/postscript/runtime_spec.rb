@@ -24,6 +24,11 @@ describe PostScript::Runtime do
       runtime.push 1
       runtime.stack.should eq [1]
     end
+
+    it "accepts multiple elements to add" do
+      runtime.push 1, 2
+      runtime.stack.should eq [1, 2]
+    end
   end
 
 end

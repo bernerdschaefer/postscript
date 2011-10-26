@@ -21,9 +21,9 @@ module PostScript
     #   runtime.push 2
     #   runtime.eval "{ dup mult }" # => [4]
     #
-    # @param element an element to add to the stack.
-    def push(element)
-      stack.push element
+    # @param elements elements to add to the stack
+    def push(*elements)
+      stack.push *elements
     end
 
     # @return [Array] the current stack
