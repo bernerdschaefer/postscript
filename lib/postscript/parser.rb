@@ -62,30 +62,30 @@ module PostScript
     # @param [Array] tokens the tokenized source
     # @return [Array] the parsed procedure
     def parse_procedure(tokens)
-      node = []
+      procedure = []
 
       while token = tokens.shift
         case token
         when "", " "
           next
         when "{"
-          node << parse_procedure(tokens)
+          procedure << parse_procedure(tokens)
         when "}"
           break
         when /^ -? [0-9]+ $/x
-          node.push Integer(token)
+          procedure.push Integer(token)
         when /^ -? [0-9]+ \. [0-9]+ $/x
-          node.push Float(token)
+          procedure.push Float(token)
         when "true"
-          node.push true
+          procedure.push true
         when "false"
-          node.push false
+          procedure.push false
         else
-          node.push token.to_sym
+          procedure.push token.to_sym
         end
       end
 
-      node
+      procedure
     end
 
   end
