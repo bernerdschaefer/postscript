@@ -124,6 +124,14 @@ module PostScript
         push pop.to_f
       end
 
+      # Shifts +int1+ +shift+ bits.
+      def bitshift
+        shift = pop
+        int1 = pop
+
+        push int1 << shift
+      end
+
     end
   end
 end

@@ -253,4 +253,14 @@ describe PostScript::Operators::Arithmetic do
     end
   end
 
+  describe "#bitshift" do
+    before do
+      runtime.push 7, 3
+    end
+
+    it "shifts the first element +shift+ bits" do
+      runtime.bitshift.should eq [ 7 << 3 ]
+    end
+  end
+
 end
