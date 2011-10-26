@@ -1,2 +1,4 @@
 Gemfile.lock
+doc/
 .rvmrc
+.yardoc
