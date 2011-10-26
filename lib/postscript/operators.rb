@@ -1,5 +1,6 @@
 require "postscript/operators/arithmetic"
 require "postscript/operators/boolean"
+require "postscript/operators/conditional"
 require "postscript/operators/stack"
 
 module PostScript
@@ -8,5 +9,6 @@ module PostScript
 
     include Arithmetic
     include Boolean
+    include Conditional
   end
 end

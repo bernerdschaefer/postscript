@@ -14,4 +14,8 @@ describe PostScript::Operators do
     described_class.ancestors.should include PostScript::Operators::Boolean
   end
 
+  it "includes PostScript::Operators::Conditional" do
+    described_class.ancestors.should include PostScript::Operators::Conditional
+  end
+
 end
