@@ -1,5 +1,8 @@
 module PostScript
   module Operators
+
+    # A module containing all defined conditional methods available to the
+    # PostScript runtime.
     module Conditional
 
       # Executes the procedure if the test condition is true.

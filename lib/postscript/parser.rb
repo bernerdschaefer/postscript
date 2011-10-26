@@ -1,6 +1,27 @@
 require "stringio"
 
 module PostScript
+
+  # The parser is responsible for normalizing and tokenizing a given string of
+  # PostScript text.
+  #
+  # It supports the following types: floats, integers, boolean, procedures, and
+  # operators.
+  #
+  # The output of the parser is always an array of these types, where floats,
+  # integers, and boolean types are represented by their native ruby types
+  # (1.0, -4, true, false), procedures by arrays, and operators by symbols.
+  #
+  # @example Simple parsing
+  #
+  #     PostScript::Parser.parse("{ 2 2 mul 2 div }")
+  #     # => [2, 2, :mul, 2, :div]
+  #
+  # @example Nested procedures
+  #
+  #     PostScript::Parser.parse "{ 4 5 gt { exch } if pop }"
+  #     # => [ 4, 5, :gt, [ :exch ], :if, :pop ]
+  #
   class Parser
 
     class << self

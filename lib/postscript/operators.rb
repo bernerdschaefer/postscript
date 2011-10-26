@@ -4,6 +4,8 @@ require "postscript/operators/conditional"
 require "postscript/operators/stack"
 
 module PostScript
+
+  # Container module for all of the PostScript operators.
   module Operators
     include Stack
 

@@ -1,5 +1,8 @@
 module PostScript
   module Operators
+
+    # A module containing all defined relational, boolean, and bitwise methods
+    # available to the PostScript runtime.
     module Boolean
 
       # Tests whether the last two elements are equal.

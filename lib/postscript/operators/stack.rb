@@ -1,5 +1,8 @@
 module PostScript
   module Operators
+
+    # A module containing all defined stack methods available to the PostScript
+    # runtime.
     module Stack
 
       # Adds a copy of the last +n+ elements on the stack.

@@ -1,5 +1,8 @@
 module PostScript
   module Operators
+
+    # A module containing all defined arithmetic methods available to the
+    # PostScript runtime.
     module Arithmetic
 
       # Replaces the last two elements with their sum.
