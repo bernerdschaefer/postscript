@@ -10,4 +10,8 @@ describe PostScript::Operators do
     described_class.ancestors.should include PostScript::Operators::Arithmetic
   end
 
+  it "includes PostScript::Operators::Boolean" do
+    described_class.ancestors.should include PostScript::Operators::Boolean
+  end
+
 end
