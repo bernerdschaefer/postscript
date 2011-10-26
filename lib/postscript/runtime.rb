@@ -1,6 +1,8 @@
 module PostScript
   class Runtime
 
+    include Operators
+
     # Evaluates the provided PostScript function and returns the stack.
     #
     # @example
@@ -19,11 +21,15 @@ module PostScript
     #   runtime.push 2
     #   runtime.eval "{ dup mult }" # => [4]
     #
-    # @param operator an operator to add to the stack.
-    def push(operator) ; end
+    # @param element an element to add to the stack.
+    def push(element)
+      stack.push element
+    end
 
     # @return [Array] the current stack
-    def stack ; end
+    def stack
+      @stack ||= []
+    end
 
   end
 end
