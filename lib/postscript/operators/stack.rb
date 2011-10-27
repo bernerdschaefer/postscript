@@ -24,7 +24,7 @@ module PostScript
 
       # Adds a copy of the +n+th element on the stack.
       def index
-        push stack[pop]
+        push stack[-(pop + 1)]
       end
 
       # Removes and returns the last element from the stack.

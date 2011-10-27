@@ -63,14 +63,16 @@ describe PostScript::Operators::Stack do
 
   describe "#index" do
     before do
+      runtime.push 0
       runtime.push 10
       runtime.push 20
+      runtime.push 30
     end
 
     it "copies the nth element onto the stack" do
-      runtime.push 0
+      runtime.push 1
       runtime.index
-      runtime.stack.should eq [10, 20, 10]
+      runtime.stack.should eq [0, 10, 20, 30, 20]
     end
   end
 
