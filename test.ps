@@ -1,0 +1,31 @@
+/abcd (myabadsc) def
+/RD {
+9 string currentfile exch readstring
+} def
+RD 123//abcd abcd
+
+(=========)
+
+
+/RE { 9 string currentfile exch readstring 123//abcd } def
+RE 123456789
+
+(=========)
+
+/RE { 9 string currentfile exch readstring 123 //abcd } def
+RE 123456789 %(%stdout) (w) file exch writestring
+
+% stack:
+%   myabadsc
+%   123
+%   true
+%   123456789
+%   =========
+%   myabadsc
+%   123
+%   true
+%   123456789
+%   =========
+%   myabadsc
+%   true
+%   123//abcd
