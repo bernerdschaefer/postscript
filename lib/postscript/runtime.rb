@@ -35,7 +35,14 @@ module PostScript
   #
   class Runtime
 
+    include Lexer::StateMachine
     include Operators
+
+    attr_reader :lexer
+
+    def initialize
+      @lexer = Lexer.new
+    end
 
     # Evaluates the provided PostScript function and returns the stack.
     #
@@ -46,21 +53,73 @@ module PostScript
     # @param [String] function the function to evaluate.
     # @return [Array] the stack after evaluating the provided function.
     def eval(function)
-      eval_procedure Parser.parse(function)
+      source = Source.new(function)
+
+      while (token = lexer.next_token(source)) != :eof
+        call token
+      end
+
       stack
+    end
+
+    push = ->(context, event) { context[:runtime].push(event) }
+    call = ->(context, event) do
+      context[:runtime].send(event)
+    end
+    nest = ->(context, event) { context[:nesting] = (context[:nesting] || 0) + 1 }
+    unnest = ->(context, event) { context[:nesting] -= 1 }
+    transition = ->(to) {
+      ->(context, _) { context.transition to }
+    }
+
+    state :default do
+      on /{/, call, nest, transition[:scan_only]
+      on Procedure do |context, procedure|
+        procedure.call(context[:runtime])
+      end
+      on Name, call
+      on Object, push
+    end
+
+    state :scan_only do
+      on "{", nest, call
+      on "}", unnest, call do |context|
+        context.transition :default if context[:nesting] == 0
+      end
+
+      on Object, push
     end
 
     # Evaluates the result of a parsed PostScript procedure.
     #
     # @api private
-    def eval_procedure(procedure)
-      procedure.each do |operator|
-        if operator.is_a? Symbol
-          send operator
-        else
-          push operator
-        end
-      end
+    def call(token)
+      @state ||= Context.new :default, runtime: self
+
+      machine.trigger @state, token
+
+#       if @scan_only
+#         return push(token) unless token.respond_to?(:immediate) && token.immediate
+#       end
+
+#       case token
+#       when Procedure
+#         token.call self
+#       when Name
+#         if token.executable
+#           send token.to_sym
+#         else
+#           push token
+#         end
+#       else
+#         push token
+#       end
+    rescue Exception => e
+
+      # puts token
+      # puts stack.inspect
+
+      raise
     end
 
     # Pushes the provided operator onto the stack. This is most useful for

@@ -11,7 +11,7 @@ describe PostScript::Operators::Conditional do
     context "when true" do
       before do
         runtime.push true
-        runtime.push [ 1 ]
+        runtime.push PostScript::Procedure.new([1])
       end
 
       it "executes the procedure" do
@@ -21,7 +21,7 @@ describe PostScript::Operators::Conditional do
 
     context "when false" do
       before do
-        runtime.push 0, false, [ 1 ]
+        runtime.push 0, false, PostScript::Procedure.new([1])
       end
 
       it "does not execute the procedure" do
@@ -35,7 +35,7 @@ describe PostScript::Operators::Conditional do
 
     context "when true" do
       before do
-        runtime.push true, [ 1 ], [ 0 ]
+        runtime.push true, PostScript::Procedure.new([1]), PostScript::Procedure.new([0])
       end
 
       it "executes the first procedure" do
@@ -45,7 +45,7 @@ describe PostScript::Operators::Conditional do
 
     context "when false" do
       before do
-        runtime.push false, [ 1 ], [ 0 ]
+        runtime.push false, PostScript::Procedure.new([1]), PostScript::Procedure.new([0])
       end
 
       it "executes the second procedure" do

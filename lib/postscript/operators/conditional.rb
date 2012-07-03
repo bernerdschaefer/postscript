@@ -9,7 +9,7 @@ module PostScript
       def if
         procedure = pop
 
-        eval_procedure procedure if pop
+        call procedure if pop
 
         stack
       end
@@ -19,9 +19,9 @@ module PostScript
         procedure1, procedure2 = stack.pop(2)
 
         if pop
-          eval_procedure procedure1
+          call procedure1
         else
-          eval_procedure procedure2
+          call procedure2
         end
 
         stack
