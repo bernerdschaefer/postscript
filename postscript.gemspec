@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = "A small PostScript interpreter in Ruby"
   s.description = s.summary
 
+  s.add_dependency "activesupport"
   s.add_development_dependency "rspec"
 
   s.files = Dir.glob("lib/**/*") + %w(README.md)
