@@ -52,6 +52,8 @@ module PostScript
         state :default do
           on "{",  capture, token[Lexer::Types::Name, executable: true, immediate: true]
           on "}",  capture, token[Lexer::Types::Name, executable: true, immediate: true]
+          on "[",  capture, token[Lexer::Types::Name, executable: true]
+          on "]",  capture, token[Lexer::Types::Name, executable: true]
 
           on "/",  transition[:literal_name_or_immediately_executable_name]
           on "<",  transition[:dicionary_start_or_special_string]
