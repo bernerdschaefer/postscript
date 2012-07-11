@@ -50,7 +50,7 @@ module PostScript
     end
 
     def inspect
-      "-- #{name} --"
+      "-- #{@name} --"
     end
 
   end

@@ -1,12 +1,15 @@
 module PostScript
   class Interpreter
     class Stack < Array
-      def pop(n = 1)
-        if n > length
-          raise StackUnderflowError, "#{n} items requested, but stack contains #{length}"
+      def pop(n = nil)
+        if n
+          if n > length
+            raise StackUnderflowError, "#{n} items requested, but stack contains #{length}"
+          end
+          super
+        else
+          super()
         end
-
-        super
       end
     end
   end

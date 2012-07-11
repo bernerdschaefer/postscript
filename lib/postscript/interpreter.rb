@@ -2,6 +2,7 @@ require "postscript/support/state_machine"
 
 require "postscript/dictionary"
 require "postscript/lexer"
+require "postscript/mark"
 require "postscript/source"
 require "postscript/operator"
 require "postscript/operators"
