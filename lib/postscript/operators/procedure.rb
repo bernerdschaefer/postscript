@@ -1,12 +1,4 @@
 module PostScript
-  class Procedure < Array
-    def call(runtime)
-      each do |operand|
-        runtime.call operand
-      end
-    end
-  end
-
   module Operators
     module Procedure
       define_method "{" do

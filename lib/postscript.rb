@@ -1,7 +1,6 @@
 require "active_support/concern"
+require "active_support/core_ext/hash/except"
 
-require "postscript/support/state_machine"
 require "postscript/lexer"
-require "postscript/operators"
-require "postscript/runtime"
+require "postscript/interpreter"
 require "postscript/source"

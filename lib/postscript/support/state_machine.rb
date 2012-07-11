@@ -22,6 +22,10 @@ module PostScript
         def trigger(event)
           self[:machine].trigger self, event
         end
+
+        def inspect
+          Hash[self].except(:machine).inspect
+        end
       end
 
       class Machine

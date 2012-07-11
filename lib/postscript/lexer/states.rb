@@ -1,3 +1,5 @@
+require "active_support/concern"
+
 module PostScript
   class Lexer
     module States
@@ -48,6 +50,9 @@ module PostScript
         end
 
         state :default do
+          on "{",  capture, token[Lexer::Types::Name, executable: true, immediate: true]
+          on "}",  capture, token[Lexer::Types::Name, executable: true, immediate: true]
+
           on "/",  transition[:literal_name_or_immediately_executable_name]
           on "<",  transition[:dicionary_start_or_special_string]
           on ">",  capture, transition[:dictionary_end]

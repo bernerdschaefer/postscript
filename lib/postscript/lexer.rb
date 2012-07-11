@@ -1,4 +1,5 @@
 require "postscript/name"
+require "postscript/support/state_machine"
 
 require "postscript/lexer/types"
 require "postscript/lexer/states"

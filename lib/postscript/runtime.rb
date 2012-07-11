@@ -77,7 +77,13 @@ module PostScript
       on Procedure do |context, procedure|
         procedure.call(context[:runtime])
       end
-      on Name, call
+      on Name do |context, name|
+        if name.executable
+          context[:runtime].send(name)
+        else
+          context[:runtime].push name
+        end
+      end
       on Object, push
     end
 
@@ -85,6 +91,14 @@ module PostScript
       on "{", nest, call
       on "}", unnest, call do |context|
         context.transition :default if context[:nesting] == 0
+      end
+
+      on Name do |context, name|
+        if name.immediate
+          context[:runtime].send(name)
+        else
+          context[:runtime].push name
+        end
       end
 
       on Object, push
@@ -97,29 +111,6 @@ module PostScript
       @state ||= Context.new :default, runtime: self
 
       machine.trigger @state, token
-
-#       if @scan_only
-#         return push(token) unless token.respond_to?(:immediate) && token.immediate
-#       end
-
-#       case token
-#       when Procedure
-#         token.call self
-#       when Name
-#         if token.executable
-#           send token.to_sym
-#         else
-#           push token
-#         end
-#       else
-#         push token
-#       end
-    rescue Exception => e
-
-      # puts token
-      # puts stack.inspect
-
-      raise
     end
 
     # Pushes the provided operator onto the stack. This is most useful for
