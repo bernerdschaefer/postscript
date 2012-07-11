@@ -9,7 +9,7 @@ module PostScript
 
       def [](key)
         dictionary = reverse.find { |dict| dict.has_key? key } or
-          raise NameError.new("undefined name #{key}")
+          raise NameError.new("undefined name `#{key.inspect}`")
         dictionary[key]
       end
     end

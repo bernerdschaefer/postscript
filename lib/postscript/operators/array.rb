@@ -19,6 +19,10 @@ module PostScript
           push operators
         end
 
+        operator "array", [Numeric] do |size|
+          push ::Array.new(size)
+        end
+
       end
     end
   end

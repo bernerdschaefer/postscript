@@ -1,7 +1,7 @@
 require "postscript/operators/arithmetic"
 require "postscript/operators/array"
 require "postscript/operators/boolean"
-require "postscript/operators/conditional"
+require "postscript/operators/control"
 require "postscript/operators/dictionary"
 require "postscript/operators/procedure"
 require "postscript/operators/stack"
@@ -12,12 +12,20 @@ module PostScript
   module Operators
     extend ActiveSupport::Concern
 
-    include Stack
     include Arithmetic
-    include Dictionary
     include Array
     include Boolean
-    include Conditional
+    include Control
+    include Dictionary
     include Procedure
+    include Stack
+
+    included do
+
+      operator "readonly" do
+        warn "ignoring #readonly"
+      end
+
+    end
   end
 end

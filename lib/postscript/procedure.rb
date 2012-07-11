@@ -2,7 +2,6 @@ module PostScript
   class Procedure < Array
     def call(interpreter)
       execution_stack = interpreter.execution_stack
-
       execution_stack.push self
 
       *operators, last = self

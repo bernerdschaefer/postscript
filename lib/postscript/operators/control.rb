@@ -1,9 +1,9 @@
 module PostScript
   module Operators
 
-    # A module containing all defined conditional methods available to the
+    # A module containing all defined control operators available to the
     # PostScript runtime.
-    module Conditional
+    module Control
       extend ActiveSupport::Concern
 
       included do
@@ -21,6 +21,13 @@ module PostScript
           end
         end
 
+        # Execute +proc+ with values from +initial+ by steps of +increment+ to +limit+.
+        operator "for", [Numeric, Numeric, Numeric, PostScript::Procedure] do |initial, increment, limit, proc|
+          (initial..limit).step(increment) do |value|
+            push value
+            trigger proc
+          end
+        end
       end
     end
   end

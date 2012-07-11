@@ -54,7 +54,8 @@ module PostScript
 
     def run
       until execution_stack.empty?
-        machine.trigger __state__, execution_stack.next_token
+        @last_token = execution_stack.next_token
+        machine.trigger __state__, @last_token
       end
     rescue => exception
       exception.message << "\n\n#{inspect}"
@@ -67,7 +68,8 @@ module PostScript
     end
 
     def inspect
-      "#<PostScript::Interpreter \n  %17s=%s\n  %17s=%s\n  %17s=%s\n  %17s=%s\n>" % [
+      "#<PostScript::Interpreter \n  %17s=%s\n  %17s=%s\n  %17s=%s\n  %17s=%s\n  %17s=%s\n>" % [
+        "@last_token", @last_token.inspect,
         "@stack", @stack.inspect,
         "@dictionary_stack", @dictionary_stack.inspect,
         "@execution_stack", @execution_stack.inspect,

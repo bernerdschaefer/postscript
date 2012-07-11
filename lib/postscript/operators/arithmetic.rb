@@ -8,7 +8,7 @@ module PostScript
 
       included do
         operator "add", [Numeric, Numeric] do |x, y|
-          push x, y
+          push x + y
         end
 
         operator "sub", [Numeric, Numeric] do |x, y|
