@@ -18,6 +18,14 @@ module PostScript
       def execution_stack
         @interpreter.execution_stack
       end
+
+      def push(*args)
+        stack.push *args
+      end
+
+      def pop(*args)
+        stack.pop *args
+      end
     end
   end
 end

@@ -4,44 +4,40 @@ module PostScript
     # A module containing all defined stack methods available to the PostScript
     # runtime.
     module Stack
+      extend ActiveSupport::Concern
 
-      # Adds a copy of the last +n+ elements on the stack.
-      def copy
-        n = pop
+      included do
+        # Discards the topmost element
+        operator "pop", [Object] do |op|
+        end
 
-        push *stack.last(n)
+        # Swaps the last two elements on the stack.
+        operator "exch", [Object, Object] do |op1, op2|
+          push op2, op1
+        end
+
+        # Duplicate the top element
+        operator "dup", [Object] do |op|
+          push op
+        end
+
+        # Adds a copy of the last +n+ elements on the stack.
+        operator "copy", [Numeric] do |n|
+          push *stack.last(n)
+        end
+
+        # Adds a copy of the +n+th element on the stack.
+        operator "index", [Numeric] do |n|
+          push stack[-(n + 1)]
+        end
+
+        # Moves the last +n+ elements +j+ positions on the stack, rolling over at
+        # stack boundaries.
+        operator "roll", [Numeric, Numeric] do |n, j|
+          push *stack.pop(n).rotate(-j)
+        end
+
       end
-
-      # Adds a duplicate copy of the top element to the end of the stack.
-      def dup
-        push stack.last
-      end
-
-      # Swaps the last two elements on the stack.
-      def exch
-        push *(stack.pop(2).reverse)
-      end
-
-      # Adds a copy of the +n+th element on the stack.
-      def index
-        push stack[-(pop + 1)]
-      end
-
-      # Removes and returns the last element from the stack.
-      #
-      # @return the last element from the stack
-      def pop
-        stack.pop
-      end
-
-      # Moves the last +n+ elements +j+ positions on the stack, rolling over at
-      # stack boundaries.
-      def roll
-        n, j = stack.pop(2)
-
-        stack.push *stack.pop(n).rotate(-j)
-      end
-
     end
   end
 end

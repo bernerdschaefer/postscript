@@ -4,121 +4,96 @@ module PostScript
     # A module containing all defined arithmetic methods available to the
     # PostScript runtime.
     module Arithmetic
+      extend ActiveSupport::Concern
 
-      # Replaces the last two elements with their sum.
-      def add
-        x, y = stack.pop(2)
-        push x + y
-      end
+      included do
+        operator "add", [Numeric, Numeric] do |x, y|
+          push x, y
+        end
 
-      # Replaces the last two elements with their difference.
-      def sub
-        x, y = stack.pop(2)
-        push x - y
-      end
+        operator "sub", [Numeric, Numeric] do |x, y|
+          push x - y
+        end
 
-      # Replaces the last two elements with their product.
-      def mul
-        x, y = stack.pop(2)
-        push x * y
-      end
+        operator "mul", [Numeric, Numeric] do |x, y|
+          push x * y
+        end
 
-      # Replaces the last two elements with their quotient.
-      def div
-        x, y = stack.pop(2)
-        push x / y
-      end
-      alias idiv div
+        operator "div", [Numeric, Numeric] do |x, y|
+          push x.fdiv(y)
+        end
 
-      # Replaces the last two elements with their remainder.
-      def mod
-        x, y = stack.pop(2)
-        push x % y
-      end
+        operator "idiv", [Integer, Integer] do |x, y|
+          push x / y
+        end
 
-      # Replaces the last element with its negated value.
-      def neg
-        push -pop
-      end
+        operator "mod", [Integer, Integer] do |x, y|
+          push x % y
+        end
 
-      # Replaces the last element with its absolute value.
-      def abs
-        push pop.abs
-      end
+        operator "neg", [Numeric] do |x|
+          push -x
+        end
 
-      # Replaces the last element with its ceil value.
-      def ceiling
-        push pop.ceil
-      end
+        operator "abs", [Numeric] do |x|
+          push x.abs
+        end
 
-      # Replaces the last element with its floor value.
-      def floor
-        push pop.floor
-      end
+        operator "ceiling", [Numeric] do |x|
+          push x.ceil
+        end
 
-      # Replaces the last element with its rounded value.
-      def round
-        push pop.round
-      end
+        operator "floor", [Numeric] do |x|
+          push x.floor
+        end
 
-      # Replaces the last element with its truncated value.
-      def truncate
-        push pop.truncate
-      end
+        operator "round", [Numeric] do |x|
+          push x.round
+        end
 
-      # Replaces the last element with its square root.
-      def sqrt
-        push Math.sqrt(pop)
-      end
+        operator "truncate", [Numeric] do |x|
+          push x.truncate
+        end
 
-      # Replaces the last element with its sine.
-      def sin
-        push Math.sin(pop)
-      end
+        operator "sqrt", [Numeric] do |x|
+          push Math.sqrt(x)
+        end
 
-      # Replaces the last element with its cosine.
-      def cos
-        push Math.cos(pop)
-      end
+        operator "sin", [Numeric] do |x|
+          push Math.sin(x)
+        end
 
-      # Replaces the last two elements with their arc tangent.
-      def atan
-        x, y = stack.pop(2)
-        push Math.atan2(x, y)
-      end
+        operator "cos", [Numeric] do |x|
+          push Math.cos(x)
+        end
 
-      # Replaces the last two elements with their exponent.
-      def exp
-        x, y = stack.pop(2)
-        push x ** y
-      end
+        operator "atan", [Numeric, Numeric] do |x, y|
+          push Math.atan2(x, y)
+        end
 
-      # Replaces the last element with its natural (base e) logarithm.
-      def ln
-        push Math.log(pop)
-      end
+        operator "exp", [Numeric, Numeric] do |x, y|
+          push x ** y
+        end
 
-      # Replaces the last element with its common (base 10) logarithm.
-      def log
-        push Math.log10(pop)
-      end
+        operator "ln", [Numeric] do |x|
+          push Math.log(x)
+        end
 
-      # Converts the last element into an integer.
-      def cvi
-        push pop.to_i
-      end
+        operator "log", [Numeric] do |x|
+          push Math.log10(x)
+        end
 
-      # Converts the last element into an real (float).
-      def cvr
-        push pop.to_f
-      end
+        operator "rand" do
+          push SecureRandom.random_number(2 ** 31 - 1)
+        end
 
-      # Shifts +int1+ +shift+ bits.
-      def bitshift
-        shift = pop
-        int1 = pop
+        operator "srand", [Integer] do |int|
+          Kernel.srand int
+        end
 
-        push int1 << shift
+        operator "rrand" do
+          push Kernel.srand
+        end
       end
 
     end

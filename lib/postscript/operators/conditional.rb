@@ -4,29 +4,24 @@ module PostScript
     # A module containing all defined conditional methods available to the
     # PostScript runtime.
     module Conditional
+      extend ActiveSupport::Concern
 
-      # Executes the procedure if the test condition is true.
-      def if
-        procedure = pop
-
-        call procedure if pop
-
-        stack
-      end
-
-      # Executes the procedure if the test condition is true.
-      def ifelse
-        procedure1, procedure2 = stack.pop(2)
-
-        if pop
-          call procedure1
-        else
-          call procedure2
+      included do
+        # Executes the procedure if the test condition is true.
+        operator "if", [Object, Procedure] do |bool, proc|
+          trigger proc if bool
         end
 
-        stack
-      end
+        # Executes the procedure if the test condition is true.
+        operator "ifelse", [Object, Procedure, Procedure] do |bool, proc1, proc2|
+          if bool
+            trigger proc1
+          else
+            trigger proc2
+          end
+        end
 
+      end
     end
   end
 end

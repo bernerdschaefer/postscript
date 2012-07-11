@@ -1,0 +1,13 @@
+module PostScript
+  class Interpreter
+    SystemDictionary = Class.new(Dictionary) do
+
+      require "postscript/operators/arithmetic"
+      include PostScript::Operators::Arithmetic
+
+      def inspect
+        "-systemdict-"
+      end
+    end.new.freeze
+  end
+end

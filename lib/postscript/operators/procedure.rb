@@ -1,20 +1,25 @@
 module PostScript
   module Operators
     module Procedure
-      define_method "{" do
-        push PostScript::Procedure.new
-      end
+      extend ActiveSupport::Concern
 
-      define_method "}" do
-        operands = []
-
-        until (value = pop).is_a?(PostScript::Procedure)
-          operands.unshift value
+      included do
+        operator "{" do
+          push PostScript::Procedure.new
         end
 
-        value.replace operands
-        push value
+        operator "}" do
+          operators = []
+
+          until (value = pop).is_a?(PostScript::Procedure)
+            operators.unshift value
+          end
+
+          value.replace operators
+          push value
+        end
       end
+
     end
   end
 end
