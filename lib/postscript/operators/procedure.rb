@@ -5,7 +5,7 @@ module PostScript
 
       included do
         operator "{" do
-          push PostScript::Procedure.new
+          push Mark
           self[:procedure_nesting] = (self[:procedure_nesting] || 0) + 1
           transition :scan_procedure
         end
@@ -13,12 +13,11 @@ module PostScript
         operator "}" do
           operators = []
 
-          until (value = pop).is_a?(PostScript::Procedure)
+          until (value = pop) == Mark
             operators.unshift value
           end
 
-          value.replace operators
-          push value
+          push PostScript::Procedure.new(operators)
 
           self[:procedure_nesting] -= 1
           transition :default if self[:procedure_nesting] == 0

@@ -57,6 +57,14 @@ module PostScript
           push a ^ b
         end
 
+        operator "true" do
+          push true
+        end
+
+        operator "false" do
+          push false
+        end
+
         # Shifts +int1+ +shift+ bits.
         operator "bitshift", [Integer, Integer] do |int, shift|
           push int << shift

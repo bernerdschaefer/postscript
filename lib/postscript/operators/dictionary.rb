@@ -49,6 +49,10 @@ module PostScript
           push dictionary_stack.last
         end
 
+        operator "known", [PostScript::Dictionary, Object] do |dict, key|
+          push dict.has_key?(key)
+        end
+
       end
     end
   end

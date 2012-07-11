@@ -37,7 +37,7 @@ module PostScript
         end
 
         state :scan_procedure do
-          on "}" do |context, name|
+          on "{", "}" do |context, name|
             context.dictionary_stack[name].call(context)
           end
 

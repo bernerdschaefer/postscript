@@ -14,10 +14,11 @@ module PostScript
     end
 
     def inspect
-      base = "Name(#{super}"
-      base << ", executable" if executable
-      base << ", immediate" if immediate
-      base << ")"
+      case
+      when immediate then "//#{to_s}"
+      when executable then to_s
+      else "/#{to_s}"
+      end
     end
   end
 end
