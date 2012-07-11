@@ -17,8 +17,8 @@ module PostScript
         end
 
         # Duplicate the top element
-        operator "dup", [Object] do |op|
-          push op
+        operator "dup" do
+          push stack.last
         end
 
         # Adds a copy of the last +n+ elements on the stack.

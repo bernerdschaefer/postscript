@@ -53,6 +53,10 @@ module PostScript
           push dict.has_key?(key)
         end
 
+        operator "put", [Object, Object, Object] do |dict, key, value|
+          dict[key] = value
+        end
+
       end
     end
   end

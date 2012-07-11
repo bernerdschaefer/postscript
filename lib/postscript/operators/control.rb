@@ -23,9 +23,9 @@ module PostScript
 
         # Execute +proc+ with values from +initial+ by steps of +increment+ to +limit+.
         operator "for", [Numeric, Numeric, Numeric, PostScript::Procedure] do |initial, increment, limit, proc|
-          (initial..limit).step(increment) do |value|
+          (initial...limit).step(increment) do |value|
             push value
-            trigger proc
+            proc.each { |op| trigger op }
           end
         end
       end
