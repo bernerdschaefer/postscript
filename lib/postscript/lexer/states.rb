@@ -106,7 +106,7 @@ module PostScript
 
         state :comment do
           on newline, transition[:default]
-          on any, capture
+          on any
           on :eof, transition[:default]
         end
 
