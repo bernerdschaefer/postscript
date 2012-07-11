@@ -35,7 +35,7 @@ module PostScript
   #
   class Runtime
 
-    include Lexer::StateMachine
+    include Support::StateMachine
     include Operators
 
     attr_reader :lexer

@@ -1,12 +1,11 @@
 require "postscript/name"
 
-require "postscript/lexer/state_machine"
 require "postscript/lexer/types"
 require "postscript/lexer/states"
 
 module PostScript
   class Lexer
-    include StateMachine
+    include Support::StateMachine
     include States
 
     def next_token(source)

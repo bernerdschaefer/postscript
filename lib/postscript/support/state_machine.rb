@@ -1,5 +1,5 @@
 module PostScript
-  class Lexer
+  module Support
     module StateMachine
       def self.included(base)
         base.extend ClassMethods
