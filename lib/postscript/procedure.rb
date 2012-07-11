@@ -1,15 +1,17 @@
 module PostScript
   class Procedure < Array
     def call(interpreter)
-      interpreter.execution_stack.push self
+      execution_stack = interpreter.execution_stack
+
+      execution_stack.push self
 
       *operators, last = self
       operators.each do |operand|
         interpreter.trigger operand
       end
 
-      interpreter.execution_stack.pop
-      interpreter.trigger last
+      execution_stack.pop
+      execution_stack.push last
     end
   end
 end

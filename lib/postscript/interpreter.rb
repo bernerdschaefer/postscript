@@ -34,7 +34,6 @@ module PostScript
     attr_reader :execution_stack
 
     def initialize(*extensions)
-      @lexer = Lexer.new
       @stack = OperatorStack.new
       @dictionary_stack = DictionaryStack.new
       @execution_stack = ExecutionStack.new
@@ -55,7 +54,7 @@ module PostScript
 
     def run
       until execution_stack.empty?
-        machine.trigger __state__, @lexer.next_token(execution_stack.last)
+        machine.trigger __state__, execution_stack.next_token
       end
     rescue => exception
       exception.message << "\n\n#{inspect}"

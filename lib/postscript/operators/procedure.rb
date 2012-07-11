@@ -6,6 +6,8 @@ module PostScript
       included do
         operator "{" do
           push PostScript::Procedure.new
+          self[:procedure_nesting] = (self[:procedure_nesting] || 0) + 1
+          transition :scan_procedure
         end
 
         operator "}" do
@@ -17,6 +19,9 @@ module PostScript
 
           value.replace operators
           push value
+
+          self[:procedure_nesting] -= 1
+          transition :default if self[:procedure_nesting] == 0
         end
       end
 

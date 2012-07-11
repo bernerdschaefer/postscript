@@ -37,6 +37,10 @@ module PostScript
         end
 
         state :scan_procedure do
+          on "}" do |context, name|
+            context.dictionary_stack[name].call(context)
+          end
+
           on immediate_name do |context, name|
             context.trigger context.dictionary_stack[name]
           end
