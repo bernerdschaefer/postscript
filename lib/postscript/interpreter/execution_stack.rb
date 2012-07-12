@@ -11,7 +11,7 @@ module PostScript
       def next_token
         current = last
 
-        if current.is_a?(Source)
+        if current.respond_to? :getc
           @lexer.next_token(current)
         else
           pop
