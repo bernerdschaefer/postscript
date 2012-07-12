@@ -29,12 +29,16 @@ module PostScript
             context.execution_stack.pop
           end
 
-          on callable do |context, operator|
+          on Procedure do |context, procedure|
+            context.push procedure
+          end
+
+          on Operator do |context, operator|
             operator.call(context)
           end
 
           on executable_name do |context, name|
-            context.trigger context.dictionary_stack[name]
+            context.execution_stack.push context.dictionary_stack[name]
           end
 
           on Object do |context, token|

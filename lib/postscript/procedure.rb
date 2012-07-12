@@ -3,7 +3,16 @@ module PostScript
     def call(interpreter)
       return if empty?
 
-      interpreter.execution_stack.concat self
+      proc = dup
+
+      iterator = ->(interpreter) do
+        if op = proc.pop
+          interpreter.execution_stack.push iterator
+          interpreter.trigger op
+        end
+      end
+
+      interpreter.execution_stack.push iterator
     end
   end
 end
