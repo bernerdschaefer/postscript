@@ -39,6 +39,20 @@ module PostScript
           execution_stack.push for_proc
         end
 
+        operator "forall", [Object, PostScript::Procedure] do |obj, proc|
+          index = 0
+
+          forall = ->(interpreter) do
+            if item = obj[index]
+              interpreter.push item
+              index += 1
+              interpreter.execution_stack.push forall, proc
+            end
+          end
+
+          execution_stack.push forall
+        end
+
         operator "quit" do
           # Not quite sure if this is the correct behavior, but it seems to be
           # accurate.

@@ -57,6 +57,14 @@ module PostScript
           push dict.has_key?(key)
         end
 
+        operator "where", [Object] do |key|
+          if dictionary = dictionary_stack.find { |d| d.has_key? key }
+            push dictionary, true
+          else
+            push false
+          end
+        end
+
         operator "put", [Object, Object, Object] do |dict, key, value|
           dict[key] = value
         end
