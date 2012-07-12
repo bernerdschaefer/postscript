@@ -17,13 +17,19 @@ module PostScript
         end
       end
 
+      callable = Module.new do
+        def self.===(other)
+          other.respond_to? :call
+        end
+      end
+
       included do
         state :default do
           on :eof do |context, token|
             context.execution_stack.pop
           end
 
-          on Operator, Procedure do |context, operator|
+          on callable do |context, operator|
             operator.call(context)
           end
 

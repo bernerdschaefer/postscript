@@ -45,6 +45,10 @@ module PostScript
           dictionary_stack[key] = value
         end
 
+        operator "load", [Object] do |key|
+          push dictionary_stack[key]
+        end
+
         operator "currentdict" do
           push dictionary_stack.last
         end

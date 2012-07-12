@@ -14,7 +14,7 @@ module PostScript
           operators = []
 
           until (value = pop) == Mark
-            operators.unshift value
+            operators.push value
           end
 
           push PostScript::Procedure.new(operators)
